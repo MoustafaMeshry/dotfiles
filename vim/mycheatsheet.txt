@@ -1,0 +1,12 @@
+* Commenting multiple lines:
+----------------------------
+To prepend (e.g. commenting lines) or append some text to multiple lines you can use vertical visual mode (C-v) to select the lines, then use "I" to prepend or "A" to append.
+
+* Operate on a word object or a paragraph object:
+-------------------------------------------------
+iw: inner word
+aw: a / around word
+ip: inner paragraph
+ap: a / around paragraph
+
+* Move to previously edited lines back "g ;" and forth "g ,"

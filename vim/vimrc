@@ -1,0 +1,101 @@
+"*******************************************************************************
+"				~My VIMRC - Moustafa Meshry~								   |
+"*******************************************************************************
+
+" With a map leader it's possible to do extra key combinations
+let mapleader = ","
+
+"------------------------------------------------------------
+"  => Mappings												|
+"------------------------------------------------------------
+
+" move up and down within wrapped lines
+nmap j gj
+nmap k gk
+
+" Swap 0 and ^. I tend to want to jump to the first non-whitespace character
+" so make that the easier one to do.
+nnoremap 0 ^
+nnoremap ^ 0
+
+" Use <C-s> to save (and even exit the insert mode)
+nmap <C-s> <esc>:w<CR>
+imap <C-s> <esc>:w<CR>
+
+" Edit and source .vimrc
+nmap <leader>vi :tabe $MUVIMRC<CR>
+nmap <leader>so :source $MYVIMRC<CR>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove 
+map <leader>tj :tabnext 
+map <leader>tk :tabprevious 
+
+
+"------------------------------------------------------------
+"  => Options												|
+"------------------------------------------------------------
+
+" Sets how many lines of history VIM has to remember
+set history=100
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw 
+
+" Show matching brackets when text indicator is over them
+set showmatch
+set scrolloff=4		" Keep at least 4 lines below cursor
+set autowrite		" Write for me when I take an action
+
+" Tabs and indentation related:
+set expandtab		" uncomment this to replace tabs with spaces
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+set noswapfile
+set autoindent		" Auto indent
+set smartindent		" Smart indent
+set wrap			" Wrap lines
+
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
+set laststatus=2	" Always display the status line
+
+set number			" set line numbers
+set ruler			" show current position (line,column)
+set hlsearch		" highlight search
+set incsearch		" show the pattern while typing a search command
+set ignorecase
+set smartcase
+
+" Status line:
+set statusline=\ %f         " Path to the file
+set statusline+=\ %m        " Modified flag
+set statusline+=\ %y        " Filetype
+set statusline+=%=          " Switch to the right side
+set statusline+=(%l,%c)     " current line
+set statusline+=/%L         " Total lines
+set statusline+=%#todo#     "switch to todo highlight
+" set statusline+=%*        "switch back to normal statusline highlight
+"set statusline+=\ -\ %{ALEGetStatusLine()}\ 
+
+" Display extra whitespaces
+"set list listchars=tab:»·,trail:·,nbsp:·
+
+"==============================================================================
+
+" Edits by Moustafa
+
+"set term=screen-256color
+
+"colorscheme darkblue
+
