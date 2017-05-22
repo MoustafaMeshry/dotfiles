@@ -1,101 +1,234 @@
-"*******************************************************************************
-"				~My VIMRC - Moustafa Meshry~								   |
-"*******************************************************************************
+" =============================================================================
+"                       ~My VIMRC - Moustafa Meshry~
+" =============================================================================
 
-" With a map leader it's possible to do extra key combinations
+" ------------------------------------------------------------------------------
+"  => General
+" ------------------------------------------------------------------------------
+
+"" Automatic reloading of .vimrc
+autocmd! bufwritepost .vimrc source
+
+"" Set leader key to have extra custom-made key combinations
 let mapleader = ","
 
-"------------------------------------------------------------
-"  => Mappings												|
-"------------------------------------------------------------
+"" Show trailing whitespace in red
+"" MUST be inserted BEFORE the coorscheme command
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 
-" move up and down within wrapped lines
-nmap j gj
-nmap k gk
+"" Add "FIXME" as a "TODO" to be highlighted as well
+syn match   myTodo   contained   "\<\([#]TODO\|FIXME\):"
+hi def link myTodo Todo
 
-" Swap 0 and ^. I tend to want to jump to the first non-whitespace character
-" so make that the easier one to do.
+"" Enable syntax highlighting
+"" You need to reload this file for the change to apply
+"filetype off               " #TODO: Not sure what that does
+"filetype plugin indent on  " #TODO: Not sure what that does
+syntax on
+
+" ------------------------------------------------------------------------------
+"  => Mappings
+" ------------------------------------------------------------------------------
+
+"" move up and down 'within' wrapped lines
+nnoremap j gj
+nnoremap k gk
+
+"" Swap 0 and ^. I tend to want to jump to the first non-whitespace character
+"" so make that the easier one to do.
 nnoremap 0 ^
 nnoremap ^ 0
 
-" Use <C-s> to save (and even exit the insert mode)
+"" Use <C-s> to save (and even exit the insert mode)
 nmap <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
 
-" Edit and source .vimrc
+"" Bind Ctrl+<movement> keys to move around windows instead of <C-w>+ <movement>
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-h> <c-w>h
+map <c-l> <c-w>l
+" #TODO: cannot differentiate yet between Ctrl+s and Ctrl+Shift
+"map <C-S-J> <c-w>J
+"map <C-S-K> <c-w>K
+"map <C-S-H> <c-w>H
+"map <C-S-L> <c-w>L
+
+"" Easier moving of code blocks (keep visual selection after indentation)
+vnoremap < <gv
+vnoremap > >gv
+
+"" Edit and source .vimrc
 nmap <leader>vi :tabe $MUVIMRC<CR>
 nmap <leader>so :source $MYVIMRC<CR>
 
-" Useful mappings for managing tabs
+"" Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>tj :tabnext 
-map <leader>tk :tabprevious 
+map <leader>tm :tabmove
+map <leader>tj :tabnext
+map <leader>tk :tabprevious
 
+"" Map sort function to a key (e.g. sorting imports)
+vnoremap <leader>s :sort<CR>
 
-"------------------------------------------------------------
-"  => Options												|
-"------------------------------------------------------------
+"" Map <esc> in normal mode to remove search highlight (:noh)
+" #TODO: on startup, makes funny behavior wit insert mode X-(
+"nnoremap <esc> :noh<CR>
+nnoremap <leader><esc> :noh<CR>
 
-" Sets how many lines of history VIM has to remember
+"-------------------------------------------------------------------------------
+"  => Options
+"-------------------------------------------------------------------------------
+
+set nocompatible    " ignore compatability with VI
+
+"" Copy & Paste: make default the global buffer:
+" TODO: still can't copy directly from vim to the outside
+set pastetoggle=<F2>    "TODO: Note sure what this does
+set clipboard=unnamed
+
+"" Sets how many lines of history VIM has to remember:
 set history=100
 
-" Set to auto read when a file is changed from the outside
+"" Set to auto read when a file is changed from the outside:
 set autoread
 
-" Don't redraw while executing macros (good performance config)
-set lazyredraw 
+"" Don't redraw while executing macros (good performance config):
+set lazyredraw
 
-" Show matching brackets when text indicator is over them
+"" Show matching brackets when text indicator is over them:
 set showmatch
 set scrolloff=4		" Keep at least 4 lines below cursor
 set autowrite		" Write for me when I take an action
 
-" Tabs and indentation related:
-set expandtab		" uncomment this to replace tabs with spaces
+"" Tabs and indentation related:
+set expandtab		" replace tabs with spaces
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
+"" disable backp and swap files, as they trigger too many events for filesystem
+""      watchers:
 set noswapfile
+set nobackup
+set nowritebackup
+
+"" Indentations and Text Wrapping:
 set autoindent		" Auto indent
 set smartindent		" Smart indent
-set wrap			" Wrap lines
+set nowrap          " Don't automatically wrap on load
+set fo-=t           " Don't automatically wrap text when typing
 
-" Make it obvious where 80 characters is
-set textwidth=80
-set colorcolumn=+1
-
-set laststatus=2	" Always display the status line
+"" Make it obvious where 80 characters is:
+set colorcolumn=81
+highlight ColorColumn ctermbg=233
 
 set number			" set line numbers
 set ruler			" show current position (line,column)
+
+"" Text search:
 set hlsearch		" highlight search
 set incsearch		" show the pattern while typing a search command
 set ignorecase
-set smartcase
+set smartcase       " TODO: note sure exactly what that does
 
-" Status line:
-set statusline=\ %f         " Path to the file
-set statusline+=\ %m        " Modified flag
-set statusline+=\ %y        " Filetype
-set statusline+=%=          " Switch to the right side
+"" Status line:     " FIXME: probably redundant since I later use vim-airline
+set laststatus=2	        " always display the status line
+set statusline=\ %f         " path to the file
+set statusline+=\ %m        " modified flag
+set statusline+=\ %y        " filetype
+set statusline+=%=          " switch to the right side
 set statusline+=(%l,%c)     " current line
-set statusline+=/%L         " Total lines
-set statusline+=%#todo#     "switch to todo highlight
-" set statusline+=%*        "switch back to normal statusline highlight
-"set statusline+=\ -\ %{ALEGetStatusLine()}\ 
+set statusline+=/%L         " total lines
+set statusline+=%#todo#     " switch to todo highlight
+set statusline+=%*          " switch back to normal statusline highlight
 
-" Display extra whitespaces
-"set list listchars=tab:»·,trail:·,nbsp:·
+set t_Co=256                " use 256 colors instead of 16
 
-"==============================================================================
+" ------------------------------------------------------------------------------
+"  => Plugins
+" ------------------------------------------------------------------------------
 
-" Edits by Moustafa
+"" set the runtime path (rtp) to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 
-"set term=screen-256color
+"" Keep Plugin commands between vundle#begin/end.
+call vundle#begin()
 
-"colorscheme darkblue
+
+Plugin 'VundleVim/Vundle.vim'           " let Vundle manage Vundle, REQUIRED
+
+Plugin 'airblade/vim-gitgutter'         " git diff integration into vim
+Plugin 'kien/ctrlp.vim'                 " fuzzy file search
+Plugin 'nanotech/jellybeans.vim'        " colors scheme
+
+Plugin 'vim-airline/vim-airline'        " status line
+Plugin 'vim-airline/vim-airline-themes' " themes for the airline status line
+Plugin 'davidhalter/jedi-vim'           " python auto-complete
+
+Plugin 'tpope/vim-fugitive'
+
+"Plugin 'powerline/powerline'
+"Plugin 'scrooloose/syntastic'
+"Plugin 'valloric/youcompleteme'
+"Plugin 'scrooloose/nerdtree'
+
+call vundle#end()
+" REQUIRED enable detecting filetype &  loading its plugin and indentation rules
+"filetype plugin indent on   " required
+filetype plugin on          " Use this isntead to ignore plugin indent changes
+
+" -------------------------
+" Jellybeans configuration:
+" -------------------------
+"" Show TODOs in yellow background
+let g:jellybeans_overrides = {
+\    'Todo': { 'guifg': '303030', 'guibg': 'f0f000',
+\              'ctermfg': 'Black', 'ctermbg': 'Yellow',
+\              'attr': 'bold' },
+\}
+colorscheme jellybeans
+
+" --------------------------
+" Vim-airline configuration:
+" --------------------------
+"let g:airline_powerline_fonts = 1
+let g:airline_theme='bubblegum'
+"" Use short hand mode names (e.g. N for Normal, I for Insert, ... etc)
+"" Airline mode map: github.com/vim-airline/vim-airline/issues/206
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n' : 'N',
+      \ 'i' : 'I',
+      \ 'R' : 'R',
+      \ 'c' : 'C',
+      \ 'v' : 'V',
+      \ 'V' : 'V',
+      \ '^V' : 'V',
+      \ 's' : 'S',
+      \ 'S' : 'S',
+      \ '^S' : 'S',
+      \ }
+
+" ------------------------
+" Jedi-vim configurations:
+" ------------------------
+"" Disable the docstring window popup during completion
+autocmd FileType python setlocal completeopt-=preview
+
+" ---------------------
+" CtrlP configurations:
+" ---------------------
+let g:ctrlp_max_height = 30
+set wildignore+=*.pyc
+set wildignore+=~*
+
+
+
+
+
 
