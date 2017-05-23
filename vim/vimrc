@@ -27,6 +27,9 @@ hi def link myTodo Todo
 "filetype plugin indent on  " #TODO: Not sure what that does
 syntax on
 
+"" automatically rebalance windows on vim resize (e.g. resizing tmux panes)
+autocmd VimResized * :wincmd =
+
 " ------------------------------------------------------------------------------
 "  => Mappings
 " ------------------------------------------------------------------------------
@@ -78,6 +81,11 @@ vnoremap <leader>s :sort<CR>
 " #TODO: on startup, makes funny behavior wit insert mode X-(
 "nnoremap <esc> :noh<CR>
 nnoremap <leader><esc> :noh<CR>
+
+
+"" Zoom in a vim pane, <C-w>= to re-balance
+nnoremap <leader>_ :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
 
 "-------------------------------------------------------------------------------
 "  => Options
@@ -172,6 +180,12 @@ Plugin 'davidhalter/jedi-vim'           " python auto-complete
 Plugin 'tpope/vim-fugitive'
 
 Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-commentary'           " comment/uncomment code using 'gc' key combination
+Plugin 'altercation/vim-colors-solarized'
+
+Plugin 'christoomey/vim-tmux-navigator' " Unify navigation between vim & tmux
+Plugin 'christoomey/vim-tmux-runner'    " VTR: interact between vim and tmux
+Plugin 'junegunn/fzf'                   " Commandline fuzzy finder
 
 "Plugin 'powerline/powerline'
 "Plugin 'valloric/youcompleteme'
@@ -247,7 +261,27 @@ let g:syntastic_python_checkers = ['flake8']
 "let g:syntastic_python_checkers = ['bandit']   " not working
 "let g:syntastic_python_checkers = ['pylint']   " heavy duty: DEAD SLOW!!!
 
+" -------------------------------------
+" Vim-Tmux-Runner (VTR) configurations:
+" -------------------------------------
+nnoremap <leader>va :VtrAttachToPane<CR>
+vnoremap <leader>va :VtrAttachToPane<CR>
+nnoremap <leader>ve :VtrSendLinesToRunner<CR>
+vnoremap <leader>ve :VtrSendLinesToRunner<CR>
+"" get rid of the VtrFlushCommand to revert to the default behaviour, which is
+""      rerunning the previously sent command.
+nnoremap <leader>vr :VtrFlushCommand<CR>:VtrSendCommand<CR>
+vnoremap <leader>vr :VtrFlushCommand<CR>:VtrSendCommand<CR>
 
+" -----------------------------
+" Vim-solarized configurations:
+" -----------------------------
+"let g:solarized_termcolors=256
+"set t_Co=256
+"set background=dark
+"colorscheme solarized
+
+" ------------------------------------------------------------------------------
 
 
 
