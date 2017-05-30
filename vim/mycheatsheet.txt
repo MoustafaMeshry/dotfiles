@@ -14,7 +14,8 @@ ap: a / around paragraph
 * Move to previously edited lines back "g ;" and forth "g ,"
 
 * GitGutter has nice commands to preview git diff for individual lines, undo them or stage them
-
+        You can jump between hunks with [c and ]c. You can preview, stage, and
+        undo hunks with <leader>hp, <leader>hs, and <leader>hu respectively.
 ===============================================================================
 
 * tmux:

@@ -70,9 +70,9 @@ nmap <leader>so :source $MYVIMRC<CR>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>tj :tabnext
-map <leader>tk :tabprevious
+map <leader>tm :tabmove<cr>
+map <leader>tj :tabnext<cr>
+map <leader>tk :tabprevious<cr>
 
 "" Map sort function to a key (e.g. sorting imports)
 vnoremap <leader>s :sort<CR>
@@ -145,14 +145,14 @@ set smartcase       " TODO: note sure exactly what that does
 
 "" Status line:     " FIXME: probably redundant since I later use vim-airline
 set laststatus=2	        " always display the status line
-set statusline=\ %f         " path to the file
-set statusline+=\ %m        " modified flag
-set statusline+=\ %y        " filetype
-set statusline+=%=          " switch to the right side
-set statusline+=(%l,%c)     " current line
-set statusline+=/%L         " total lines
-set statusline+=%#todo#     " switch to todo highlight
-set statusline+=%*          " switch back to normal statusline highlight
+"set statusline=\ %f         " path to the file
+"set statusline+=\ %m        " modified flag
+"set statusline+=\ %y        " filetype
+"set statusline+=%=          " switch to the right side
+"set statusline+=(%l,%c)     " current line
+"set statusline+=/%L         " total lines
+"set statusline+=%#todo#     " switch to todo highlight
+"set statusline+=%*          " switch back to normal statusline highlight
 
 set t_Co=256                " use 256 colors instead of 16
 
@@ -187,8 +187,9 @@ Plugin 'christoomey/vim-tmux-navigator' " Unify navigation between vim & tmux
 Plugin 'christoomey/vim-tmux-runner'    " VTR: interact between vim and tmux
 Plugin 'junegunn/fzf'                   " Commandline fuzzy finder
 
+Plugin 'valloric/youcompleteme'
+
 "Plugin 'powerline/powerline'
-"Plugin 'valloric/youcompleteme'
 "Plugin 'scrooloose/nerdtree'
 
 call vundle#end()
@@ -270,8 +271,36 @@ nnoremap <leader>ve :VtrSendLinesToRunner<CR>
 vnoremap <leader>ve :VtrSendLinesToRunner<CR>
 "" get rid of the VtrFlushCommand to revert to the default behaviour, which is
 ""      rerunning the previously sent command.
-nnoremap <leader>vr :VtrFlushCommand<CR>:VtrSendCommand<CR>
-vnoremap <leader>vr :VtrFlushCommand<CR>:VtrSendCommand<CR>
+"nnoremap <leader>vr :VtrFlushCommand<CR>:VtrSendCommand<CR>
+"vnoremap <leader>vr :VtrFlushCommand<CR>:VtrSendCommand<CR>
+nnoremap <leader>vr :VtrSendCommand<CR>
+vnoremap <leader>vr :VtrSendCommand<CR>
+
+" ----------------------------------
+" YouCompleteMe (YCM) configuration:
+" ----------------------------------
+""TODO: you need to complete the YCM installation by following the link:
+""      https://valloric.github.io/YouCompleteMe/#ubuntu-linux-x64
+"" 1) Install YCM with vundle
+"" 2) cd .vim/bundle/youcompleteme/
+"" 3) ./install.py --clang-completer
+"" TODO: put the above instructions in your setup.sh
+
+"" Add python to the default blacklist, as I have vim-jedi for python
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'qf' : 1,
+      \ 'notes' : 1,
+      \ 'markdown' : 1,
+      \ 'unite' : 1,
+      \ 'text' : 1,
+      \ 'vimwiki' : 1,
+      \ 'pandoc' : 1,
+      \ 'infolog' : 1,
+      \ 'mail' : 1,
+      \ 'python' : 1
+      \}
+let g:ycm_filetype_whitelist = { '*': 1 } " Default value is { '*': 1 }
 
 " -----------------------------
 " Vim-solarized configurations:
