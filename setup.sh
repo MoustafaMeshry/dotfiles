@@ -2,14 +2,14 @@
 #TODO: execute vimrc and BundleInstall here, so that everything is ready
 #TODO: automate the extra setup steps (e.g. for YCM plugin and so...)
 tmp=`realpath tmux/tat`
-mkdir -p ~/bin
-ln -s $tmp ~/bin/
+mkdir -p ~/usr/local/bin
+ln -sf $tmp ~/usr/local/bin/
 
 tmp=`realpath tmux/tmux.conf`
-ln -s $tmp ~/.tmux.conf
+ln -sf $tmp ~/.tmux.conf
 
 tmp=`realpath vim/vimrc`
-ln -s $tmp ~/.vimrc
+ln -sf $tmp ~/.vimrc
 
-tmp=`realpath bash/bashrc`
-ln -s $tmp ~/.bashrc
+# tmp=`realpath bash/bashrc`
+# ln -s $tmp ~/.bashrc
