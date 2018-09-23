@@ -131,7 +131,7 @@ set nowrap          " Don't automatically wrap on load
 set fo-=t           " Don't automatically wrap text when typing
 
 "" Make it obvious where 80 characters is:
-set colorcolumn=81
+set colorcolumn=80
 highlight ColorColumn ctermbg=233
 
 set number			" set line numbers
