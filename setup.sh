@@ -1,6 +1,7 @@
 #TODO: take backup of existing conf files, before you replace them
 #TODO: execute vimrc and BundleInstall here, so that everything is ready
 #TODO: automate the extra setup steps (e.g. for YCM plugin and so...)
+#TODO: set up tat on the new machine
 tmp=`realpath tmux/tat`
 mkdir -p ~/bin
 ln -s $tmp ~/bin/
