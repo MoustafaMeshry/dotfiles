@@ -114,9 +114,9 @@ set autowrite		" Write for me when I take an action
 
 "" Tabs and indentation related:
 set expandtab		" replace tabs with spaces
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 
 "" disable backp and swap files, as they trigger too many events for filesystem
 ""      watchers:
