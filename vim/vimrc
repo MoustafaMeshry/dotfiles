@@ -156,6 +156,9 @@ set laststatus=2	        " always display the status line
 
 set t_Co=256                " use 256 colors instead of 16
 
+" Show live word cound                                                          
+set statusline+=%{wordcount().words}\ words  
+
 " ------------------------------------------------------------------------------
 "  => Plugins
 " ------------------------------------------------------------------------------
